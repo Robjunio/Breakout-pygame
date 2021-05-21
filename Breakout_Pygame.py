@@ -41,8 +41,65 @@ bola_dx = 5
 game_loop = True
 game_clock = pygame.time.Clock()
 
-while game_loop:
 
+vermelho = (255, 0, 0)
+verde = (0, 255, 0)
+laranja = (255, 165, 0)
+amarelo = (255, 255, 0)
+
+#blocos
+class wall():
+    def __init__(self):
+        self.width = size[0] // 14
+        self.height = 50
+
+    def create_wall(self):
+        self.blocos = []
+        bloco_individual = []
+
+        for linha in range(8):
+            linha_blocos = []
+
+            for col in range(14):
+                bloco_x = self.width * col
+                bloco_y = self.height * linha
+                rect = pygame.Rect(bloco_x, bloco_y, self.width, self.height)
+
+                #força do bloco
+                if linha < 2:
+                    strength = 4
+                elif linha < 4:
+                    strength = 3
+                elif linha < 6:
+                    strength = 2
+                elif linha < 8:
+                    strength = 1
+
+                bloco_individual = [rect, strength]
+
+                linha_blocos.append(bloco_individual)
+            self.blocos.append(linha_blocos)
+
+    def draw_wall(self):
+        for linha in self.blocos:
+            for bloco in linha:
+                if bloco[1] == 4:
+                    cor_bloco = vermelho
+                elif bloco[1] == 3:
+                    cor_bloco = laranja
+                elif bloco[1] == 2:
+                    cor_bloco = verde
+                elif bloco[1] == 1:
+                    cor_bloco = amarelo
+                pygame.draw.rect(screen, cor_bloco, bloco[0])
+                pygame.draw.rect(screen, COLOR_BLACK, bloco[0], 10)
+
+wall = wall()
+wall.create_wall()
+
+
+while game_loop:
+    wall.draw_wall()
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_loop = False
