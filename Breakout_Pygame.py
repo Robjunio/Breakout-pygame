@@ -148,21 +148,26 @@ while game_loop:
         
         ball_dy *= -1
     
-    if 496 > ball_y > 486:
+    if 596 > ball_y > 480:
         if ball_x + 10 > player_x:
-            if player_x + 60 > ball_x:
-                ball_y = 486
-                if ball_dy == 0:
-                    ball_dy = 5 
-                if ball_x <= player_x + 10 or ball_x >= player_x + 50:
-                    ball_dy *= -1
-                elif player_x + 35 > ball_x > player_x + 25:
-                    ball_dy *= 0
-                else:
+            if player_x + 60 > ball_x: 
+                if 50 > ball_x > 10:
                     ball_dy *= 1
+                else:
+                    ball_dy *= -1
+                ball_y = 486
                 ball_dx *= -1.1
 
-                
+    for row in wall.blocos:
+        for item in row:
+            if item[0][1] + 10 > ball_y > item[0][1] :
+                if ball_x + 10 > item[0][0]:
+                    if item[0][0] + item[0][2] > ball_x:
+                        ball_y = item[0][1] + 21
+                        ball_dy *= -1
+                        item[0] = (0,0,0,0)
+                        
+                        
     screen.blit(back, (0,60))
     screen.blit(player, (player_x, 496))
     screen.blit(ball, (ball_x, ball_y))
