@@ -16,6 +16,9 @@ vermelho = (200, 72, 72)
 black = (0, 0, 0)
 gray = (142, 142, 142)
 
+# Sound
+bounce = pygame.mixer.Sound("bounce.wav")
+
 # Definição da tela
 size = (578, 540) 
 screen = pygame.display.set_mode(size)
@@ -154,33 +157,35 @@ while game_loop:
             if ball_y < 500:
                 ball_x = 524
                 ball_dx *= -1
-
+                bounce.play()
         if ball_x < 44:  # Left wall
             if ball_y < 500:
                 ball_x = 44
                 ball_dx *= -1
-
+                bounce.play()
         if ball_y < 104: # Upper wall
             ball_y = 104
             ball_dy *= -1
-
+            bounce.play()
         if ball_y > 540:
             lifes -= 1
             ball_x = 284
             ball_y = 284
             ball_dx = 2.5
             ball_dy = 2.5
-        
+            bounce.play()
         if 496 > ball_y > 486:
             if ball_x + 10 > player_x:
                 if player_x + 60 > ball_x: 
                     if player_x + 50 >  ball_x > player_x + 10:
                         ball_dx *= 1.05
+                        bounce.play()
                     else:
                         ball_dx *= -1.05
+                        bounce.play()
                     ball_y = 486
                     ball_dy *= -1
-
+                    bounce.play()
         for row in wall.blocos:
             for item in row:
                 if item[0][1] + 20  > ball_y > item[0][1]:
@@ -188,7 +193,7 @@ while game_loop:
                         if item[0][0] + item[0][2] > ball_x:  
                             ball_dy *= -1
                             item[0] = (0,0,0,0)
-
+                            bounce.play()
                             blocks_gone += 1
                         
         if blocks_gone == MAX_BLOCOS:
