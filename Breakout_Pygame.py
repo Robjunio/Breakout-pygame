@@ -17,8 +17,9 @@ black = (0, 0, 0)
 gray = (142, 142, 142)
 
 # Sound
-bounce = pygame.mixer.Sound("bounce.wav")
-lose = pygame.mixer.Sound("lose.wav")
+bounce = pygame.mixer.Sound("Sprites/bounce.wav")
+lose = pygame.mixer.Sound("Sprites/lose.wav")
+pop = pygame.mixer.Sound("Sprites/poping.flac")
 
 # Screen definition
 size = (578, 540) 
@@ -50,7 +51,8 @@ class Wall:
             for col in range(14):
                 bricks_x = 44 + self.width * col
                 bricks_y = 164 + self.height * line
-                rect = pygame.Rect(bricks_x, bricks_y, self.width, self.height)
+                rect = pygame.Rect(bricks_x, bricks_y, self.width,
+                                   self.height)
 
                 # Block strength
                 if line < 1:
@@ -196,9 +198,9 @@ while game_loop:
                         if item[0][0] + item[0][2] > ball_x:  
                             ball_dy *= -1
                             item[0] = (0, 0, 0, 0)
-                            bounce.play()
                             blocks_gone += 1
-                        
+                            pop.play()
+                            
         if blocks_gone == MAX_BRICKS:
             blocks_gone = 0
             ball_x = 284
